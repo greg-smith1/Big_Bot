@@ -1,0 +1,13 @@
+{% extends "structure.html" %}
+{% block main %}
+
+<br>
+<h1>Cohort</h1>
+{{ cohort|safe }}
+<br>
+<h1>Students</h1>
+{{ students|safe }}
+<br>
+<p>Return to <a href='/lookup'>lookup</a></p>
+
+{% endblock main %}

@@ -1,0 +1,29 @@
+{% extends "structure.html" %}
+{% block main %}
+<br>
+{{ message }}
+<br>
+<form method='post'>
+    <p>Please enter presentation topics below in order of importance.</p>
+    <label for="week" >Week</label>
+    <input name='week' placeholder='Week number' type='number'><br>    
+    <label for="topic_1" >Topic 1</label>
+    <input name='topic_1' placeholder='Most important topic' type='text'><br>
+    <label for="topic_2" >Topic 2</label>
+    <input name='topic_2' placeholder='Next most important topic' type='text'><br>
+    <label for="topic_3" >Topic 3</label>
+    <input name='topic_3' placeholder='Additional topic' type='text'><br>
+    <label for="topic_4" >Topic 4</label>
+    <input name='topic_4' placeholder='Additional topic' type='text'><br>
+    <label for="topic_5" >Topic 5</label>
+    <input name='topic_5' placeholder='Additional topic' type='text'><br>
+    <label for="topic_6" >Topic 6</label>
+    <input name='topic_6' placeholder='Additional topic' type='text'><br>
+    <label for="topic_7" >Topic 7</label>
+    <input name='topic_7' placeholder='Additional topic' type='text'><br>
+    <label for="topic_8" >Topic 8</label>
+    <input name='topic_8' placeholder='Additional topic' type='text'><br>
+    <input type='submit'>
+</form>
+
+{% endblock main %}

@@ -1,0 +1,17 @@
+{% extends "structure.html" %}
+{% block main %}
+<br>
+{{ message }}
+<br>
+<form method='post'>
+    <p>Please enter quiz info below.</p>
+    <label for="week" >Week</label>
+    <input name='week' placeholder='Week number' type='number'><br>    
+    <label for="prompt" >Prompt</label>
+    <input name='prompt' placeholder='Description here' type='text'><br>
+    <label for="github_link" >Github link</label>
+    <input name='github_link' placeholder='github.com/example_data.csv' type='text'><br>
+    <input type='submit'>
+</form>
+
+{% endblock main %}

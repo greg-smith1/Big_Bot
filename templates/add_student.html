@@ -1,0 +1,41 @@
+{% extends "structure.html" %}
+{% block main %}
+<br>
+{{ message }}
+<br>
+<form method='post'>
+    <p>Please enter student data below.</p>
+    <label for="first_name" >First Name</label>
+    <input name='first_name' placeholder='Greg' type='text'><br>
+    <label for="last_name" >Last Name</label>
+    <input name='last_name' placeholder='Smith' type='text'><br>
+    <label for="slack_id" >Slack ID</label>
+    <input name='slack_id' placeholder='A1234567Z' type='text'><br>
+    <label for="email" >Email</label>
+    <input name='email' placeholder='example@byte.co' type='text'><br>
+    <label for="phone_num" >Phone Number</label>
+    <input name='phone_num' placeholder='1234567890' type='text'><br>
+    <label for="github_id" >Github ID</label>
+    <input name='github_id' placeholder='github/example_name_1' type='text'><br>
+    <label for="cohort" >Cohort</label>
+    <input name='cohort' placeholder='4' type='number'><br>
+    <label for="week" >Week</label>
+    <input name='week' placeholder='1' type='number'><br>
+    <label for="length" >Program Length</label>
+    <input name='length' placeholder='14' type='number'><br>
+    <label for="birthday" >Birthdate</label>
+    <input name='birthday' placeholder='YYYY-MM-DD' type='text'><br>
+    <label for="course_type" >Course</label>
+    <input name='course_type' placeholder='Fullstack' type='text'><br>
+    <label for="project_1" >Project 1</label>
+    <input name='project_1' placeholder='proj_name' type='text'><br>
+    <label for="design_1" >Design Doc 1</label>
+    <input name='design_1' placeholder='False' type='text'><br>
+    <label for="project_2" >Project 2</label>
+    <input name='project_2' placeholder='proj_2' type='text'><br>
+    <label for="design_2" >Design Doc 2</label>
+    <input name='design_2' placeholder='False' type='text'><br>
+    <input type='submit'>
+</form>
+
+{% endblock main %}

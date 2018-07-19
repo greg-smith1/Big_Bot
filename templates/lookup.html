@@ -1,0 +1,40 @@
+{% extends "structure.html" %}
+{% block main %}
+
+<form method="post">
+  <label for="studentsearch" >Students</label>
+  <input name='studentsearch' placeholder='First Last' type='text'><br>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<br>
+<br>
+<br>
+<br>
+<form method="post">
+    <label for="cohortsearch" >Cohorts</label>
+    <input name='cohortsearch' placeholder='Name' type='text'><br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock main %}
+
+<div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputcategory">Look Up</label>
+      <br>
+      <br>
+      <select id="inputcategory" class="form-control">
+        <option value="student">Student</option>
+        <option value="cohort">Cohort</option>
+        <option value="topic">Presentation</option>
+        <option value="quiz">Quiz</option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-2">
+      <label for="inputsearch">Student name (first, last), Cohort name, or Week</label>
+      <input type="text" class="form-control" id="inputsearch">
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

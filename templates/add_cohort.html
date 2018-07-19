@@ -1,0 +1,26 @@
+{% extends "structure.html" %}
+{% block main %}
+<br>
+{{ message }}
+<br>
+<form method='post'>
+    <p>Please enter cohort data below.</p>
+    <label for="cohort_name" >Name</label>
+    <input name='cohort_name' placeholder='Name' type='text'><br>
+    <label for="start_date" >Start Date</label>
+    <input name='start_date' placeholder='YYYY-MM-DD' type='text'><br>
+    <label for="end_date" >End Date</label>
+    <input name='end_date' placeholder='YYYY-MM-DD' type='text'><br>
+    <label for="start_students" >Starting Students</label>
+    <input name='start_students' placeholder='4' type='number'><br>
+    <label for="week" >Week</label>
+    <input name='week' placeholder='1' type='number'><br>
+    <label for="end_students" >Current Students</label>
+    <input name='end_students' placeholder='4' type='number'><br>
+    <label for="slack_channel" >Slack Id</label>
+    <input name='slack_channel' placeholder='A1234567Z' type='text'><br>
+    <input type='submit'>
+</form>
+
+{% endblock main %}
+
