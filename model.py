@@ -121,3 +121,17 @@ def add_topics(topic_1, topic_2, topic_3, topic_4, topic_5, topic_6, topic_7, to
     except:
         return False
 
+def edit_db(table, column, value, id_):
+    connection = sqlite3.connect('byte_master.db', check_same_thread = False)
+    cursor     = connection.cursor()
+    sql_command = """UPDATE {table} SET {column} = '{value}' WHERE pk = {id_};""".format(table, column, value, id_)
+    try:
+        cursor.execute(sql_command)
+        connection.commit()
+        cursor.close()
+        return True
+    except:
+        return False
+
+
+
