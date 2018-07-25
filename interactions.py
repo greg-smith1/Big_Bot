@@ -14,7 +14,7 @@ slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
 #starterbot_id = None
 
 # constants
-VERSION = 'Clementine'
+VERSION = 'Abernathy'
 RTM_READ_DELAY = 3 # 1 second delay between reading from RTM
 EXAMPLE_COMMAND = "do"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
@@ -26,12 +26,15 @@ def parse_bot_commands(slack_events, starter_id):
         If its not found, then this function returns None, None.
     """
     for event in slack_events:
+        with open('slack_events.txt', 'a+') as events_file:
+            event_str = (str(event) + '\n')
+            events_file.write(event_str)
         print(event)
         if event["type"] == "message" and not "subtype" in event:
             user_id, message = parse_direct_mention(event["text"])
             if user_id == starter_id:
-                return message, event["channel"]
-    return None, None
+                return message, event["channel"], event["user"]
+    return None, None, None
 
 def parse_direct_mention(message_text):
     """
@@ -42,7 +45,7 @@ def parse_direct_mention(message_text):
     # the first group contains the username, the second group contains the remaining message
     return (matches.group(1), matches.group(2).strip()) if matches else (None, None)
 
-def handle_command(command, channel, starter_id):
+def handle_command(command, channel, starter_id, sending_user):
     """
         Executes bot command if the command is known
     """
@@ -51,12 +54,11 @@ def handle_command(command, channel, starter_id):
     username = 'ByteBot'
     emoji = ':byte:'
     
-    """
     reply_user = slack_client.api_call(
                 "users.info",
                 user=sending_user
-                )['user']['real_name']
-    """
+                )['user']['profile']['real_name']
+    print('\n', reply_user, '\n')
 
     # Default response is help text for the user
     default_response = "Not sure what you mean. Try *{}* or *{}*.".format('hi', 'status')
@@ -64,10 +66,8 @@ def handle_command(command, channel, starter_id):
     # Finds and executes the given command, filling in response
     response = None
     # This is where you start to implement more commands!
-    if command.startswith(EXAMPLE_COMMAND):
-        response = "Sure...write some more code then I can do that!"
 
-    elif command.startswith('explain attendance'):
+    if command.startswith('explain attendance'):
         username = 'attendancebot'
         emoji = ':slack:'
         slack_client.api_call(
@@ -90,9 +90,6 @@ have any other questions, ask Greg!'
         response_list = ['Fine.', 'Bored', 'Waiting for a real command', 'Jaded', ':face_vomiting:']
         response = random.choice(response_list)
 
-    elif command.startswith("say hi"):
-        response = "Hi. But shouldn't you get me logging attendance?"
-
     elif command.startswith("status"):
         my_name = os.path.basename(sys.argv[0]).split('.')[0]
         process = os.getpid()
@@ -114,7 +111,7 @@ have any other questions, ask Greg!'
 
     elif command.startswith('help'):
 
-        slide('U8BE9UNHF')
+        slide('U8BE9UNHF', reply_user)
         post=False
 
     if post==True:
@@ -126,15 +123,11 @@ have any other questions, ask Greg!'
         icon_emoji=emoji
     )
 
-def slide(user_id):
+def slide(user_id, reply_user):
     """
         Sends Bytebot to DM a user
     """
-    user_name = slack_client.api_call(
-                "users.info",
-                user=user_id
-                )['user']['real_name']
-    response = "Heyy"
+    response = "{} needs your assistance".format(reply_user)
     slack_client.api_call(
         "chat.postMessage",
         channel=user_id,

@@ -29,6 +29,12 @@ def dispatch_quiz(prompt, slack_id):
         icon_emoji=':byte:'
     )
 
+def quiz_protocol(cohorts):
+    for cohort in cohorts:
+        week = get_week(cohort[1])
+        quiz = obtain_quiz(week)
+        dispatch_quiz(quiz, cohort[1])
+
 def update_week(table):
     connection = sqlite3.connect('byte_master.db', check_same_thread = False)
     cursor     = connection.cursor()
