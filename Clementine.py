@@ -18,6 +18,7 @@ slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
 # Bytebot's user ID in Slack: value is assigned after the bot starts up
 starterbot_id = None
 # constants
+VERSION = 'Clementine'
 EXAMPLE_COMMAND = "do"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
 DELAY = 3 # 1 second delay between reading from RTM
@@ -27,6 +28,7 @@ def run_threaded(job_func):
     job_thread.start()
 
 def job_1():
+    print('job1')
     attendance_protocol('10:00', cohorts=my_channel_list)
 
 def job_2():
@@ -61,8 +63,8 @@ if __name__ == "__main__":
             command, channel = parse_bot_commands(slack_client.rtm_read(), starterbot_id)
             if command:
                 print('command!!!!!')
-                handle_command(command, channel, starterbot_id)
-            #schedule.run_pending()
+                run_threaded(handle_command(command, channel, starterbot_id))
+            schedule.run_pending()
             #slide_staff_dms('U8BE9UNHF')
             #slide_staff_dms('U1K2NBXUG')
             time.sleep(DELAY)

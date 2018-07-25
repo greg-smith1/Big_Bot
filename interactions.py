@@ -14,6 +14,7 @@ slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
 #starterbot_id = None
 
 # constants
+VERSION = 'Clementine'
 RTM_READ_DELAY = 3 # 1 second delay between reading from RTM
 EXAMPLE_COMMAND = "do"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
@@ -25,6 +26,7 @@ def parse_bot_commands(slack_events, starter_id):
         If its not found, then this function returns None, None.
     """
     for event in slack_events:
+        print(event)
         if event["type"] == "message" and not "subtype" in event:
             user_id, message = parse_direct_mention(event["text"])
             if user_id == starter_id:
@@ -48,6 +50,7 @@ def handle_command(command, channel, starter_id):
     post=True
     username = 'ByteBot'
     emoji = ':byte:'
+    
     """
     reply_user = slack_client.api_call(
                 "users.info",
@@ -93,12 +96,15 @@ have any other questions, ask Greg!'
     elif command.startswith("status"):
         my_name = os.path.basename(sys.argv[0]).split('.')[0]
         process = os.getpid()
-        username = 'byte_system_bot'
-        emoji = ':robot_face:'
-        response = "ByteBot Online.\n Version: {}\n PID: {}\n Slack ID: {}".format(my_name, process, starter_id)
+        username = str(my_name)
+        emoji = ':slack:'
+        response = "ByteBot Online.\nVersion: {}\nPID: {}\nSlack ID: {}".format(VERSION, process, starter_id)
 
     # Sends the response back to the channel
     
+    elif command.startswith('analysis'):
+        pass
+
     elif command.startswith('lookup Greg'):
         print(slack_client.api_call(
                 "users.info",
@@ -106,7 +112,8 @@ have any other questions, ask Greg!'
                 )['user']['real_name'])
         response = 'Looked Greg up (check your terminal)'
 
-    elif command.startswith('get Greg'):
+    elif command.startswith('help'):
+
         slide('U8BE9UNHF')
         post=False
 
