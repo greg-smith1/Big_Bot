@@ -18,19 +18,16 @@ def attendance_protocol(hour, cohorts):
     """
         Executes bot command if the command is known
     """
-    try:
-        os.system('rm attendance.csv')
-    except:
-        print('\nno existing attendance file')
 
     sent_attendance = []
+    date = time.strftime("%Y_%m_%d")
     for cohort in cohorts:
         channel, msg_time = post_attendance(channel=cohort[1], cohort_name=cohort[0])
         sent_attendance.append((channel, msg_time, cohort[0]))
 
     time.sleep(600)
-    with open('attendance.csv', 'a+') as a_report:
-        a_report.write('name,time,cohort\n')
+    with open('attendance_{}.csv'.format(date), 'a+') as a_report:
+        a_report.write('name,time,cohort,date\n')
         for attendance in sent_attendance:
             response_json = take_attendance(channel=attendance[0], ts=attendance[1])
             print(len(response_json))
@@ -45,7 +42,7 @@ def attendance_protocol(hour, cohorts):
                         user=user[0]
                         )['user']['real_name'])
                     print(name)
-                    a_report.write('{},{},{}\n'.format(name, hour, attendance[2]))
+                    a_report.write('{},{},{},{}\n'.format(name, hour, attendance[2], date))
             except:
                 print('No check-ins recorded')
     print('\nCSV Written!!\n')

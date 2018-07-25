@@ -4,10 +4,10 @@ from slackclient import SlackClient
 
 slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
 
-def get_slack_ids(week):
+def get_week(slack_id):
     connection = sqlite3.connect('byte_master.db', check_same_thread = False)
     cursor     = connection.cursor()
-    cursor.execute("SELECT FROM quizzes WHERE pk= '{}';".format(week))
+    cursor.execute("SELECT week FROM cohorts WHERE slack_id= '{}';".format(slack_id))
     ids = cursor.fetchall()
     print(ids)
     return ids
@@ -15,7 +15,7 @@ def get_slack_ids(week):
 def obtain_quiz(week):
     connection = sqlite3.connect('byte_master.db', check_same_thread = False)
     cursor     = connection.cursor()
-    cursor.execute("SELECT * FROM quizzes WHERE pk= '{}';".format(week))
+    cursor.execute("SELECT * FROM quizzes WHERE week= '{}';".format(week))
     quiz = cursor.fetchone()[1]
     print(quiz)
     return quiz
@@ -25,6 +25,13 @@ def dispatch_quiz(prompt, slack_id):
         "chat.postMessage",
         channel=slack_id,
         text=prompt,
-        username='ByteBot',
-        icon_emoji=':python:'
+        username='QuizBot',
+        icon_emoji=':byte:'
     )
+
+def update_week(table):
+    connection = sqlite3.connect('byte_master.db', check_same_thread = False)
+    cursor     = connection.cursor()
+    cursor.execute("UPDATE {} SET week = week + 1;".format(table))
+    connection.commit()
+    cursor.close()
